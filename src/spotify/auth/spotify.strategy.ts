@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { Profile, Strategy, VerifyCallback } from 'passport-spotify'
-import { NetworkConfig } from '../../config'
+import { NetworkConfig } from '../../config/config'
 import { SpotifyConfig } from '../spotify.config'
 import { SpotifyOAuthScope, scopesToParam } from './scope'
 
@@ -10,14 +10,11 @@ export class SpotifyStrategy extends PassportStrategy(Strategy, 'spotify') {
   private readonly logger: Logger = new Logger('SpotifyStrategy')
 
   constructor(private readonly config: SpotifyConfig, private readonly networkConfig: NetworkConfig) {
-    // const callbackURL = `${networkConfig.protocol}://${networkConfig.host}:${networkConfig.port}/spotify/auth/callback`
-    const callbackURL = 'http://localhost:3000/spotify/auth/callback'
-
     super(
       {
         clientID: config.clientId,
         clientSecret: config.clientSecret,
-        callbackURL,
+        callbackURL: networkConfig.url,
         scope: scopesToParam([
           SpotifyOAuthScope.UserReadPrivate,
           SpotifyOAuthScope.UserReadEmail,
@@ -31,6 +28,6 @@ export class SpotifyStrategy extends PassportStrategy(Strategy, 'spotify') {
         return done(null, profile, { accessToken, refreshToken, expires_in })
       },
     )
-    this.logger.log('Create spotify strategy', JSON.stringify(config), callbackURL)
+    this.logger.log('Create spotify strategy', JSON.stringify(config), networkConfig.url)
   }
 }

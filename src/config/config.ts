@@ -1,7 +1,7 @@
+import { AuthConfig } from '@core'
 import { Type } from 'class-transformer'
-import { IsNumber, IsString, ValidateNested } from 'class-validator'
-import { AuthConfig } from './core/user/auth/auth.config'
-import { SpotifyConfig } from './spotify/spotify.config'
+import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
+import { SpotifyConfig } from '../spotify/spotify.config'
 
 export class NetworkConfig {
   @IsString()
@@ -10,8 +10,16 @@ export class NetworkConfig {
   @IsString()
   host = 'localhost'
 
+  @IsString()
+  @IsOptional()
+  path = ''
+
   @IsNumber()
   port = 3000
+
+  get url(): string {
+    return `${this.protocol}//${this.host}:${this.port}`
+  }
 }
 
 export class Config {
