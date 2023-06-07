@@ -1,0 +1,5 @@
+{
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "prisma.fileWatcher": true
+}

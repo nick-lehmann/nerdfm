@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator clientjs {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Artist {
+  id     String  @id @default(uuid())
+  name   String
+  tracks Track[]
+}
+
+model Track {
+  id           String         @id @default(uuid())
+  name         String
+  artists      Artist[]
+  bpm          Int?
+  TrackHistory TrackHistory[]
+  duration     Int
+
+  isrc String?
+  ean  String?
+  upc  String?
+
+  spotifyId String?
+}
+
+model TrackHistory {
+  userId    Int
+  track     Track    @relation(fields: [trackId], references: [id])
+  trackId   String
+  timestamp DateTime @default(now())
+
+  @@id([userId, timestamp])
+}
+
+model User {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model SpotifyToken {
+  userId       Int      @id
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  scopes       String
+}
