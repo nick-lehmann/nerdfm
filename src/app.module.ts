@@ -18,7 +18,7 @@ import { SpotifyModule } from './spotify/spotify.module'
       schema: Config,
       load: fileLoader({
         // basename: 'config',
-        absolutePath: '/Users/nick/Projekte/spotimy-nest/config.yml',
+        absolutePath: '/Users/nick/Projekte/nerdfm/config.yml',
       }),
     }),
     PrismaModule,
