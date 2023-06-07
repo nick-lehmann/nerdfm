@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
 import { Profile, Strategy, VerifyCallback } from 'passport-spotify'
-import { NetworkConfig } from '../../config'
+import { NetworkConfig } from '../../config/config'
 import { SpotifyConfig } from '../spotify.config'
 import { SpotifyOAuthScope, scopesToParam } from './scope'
 

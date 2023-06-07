@@ -1,7 +1,7 @@
+import { AuthConfig } from '@core'
 import { Type } from 'class-transformer'
 import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
-import { AuthConfig } from './core/user/auth/auth.config'
-import { SpotifyConfig } from './spotify/spotify.config'
+import { SpotifyConfig } from '../spotify/spotify.config'
 
 export class NetworkConfig {
   @IsString()
