@@ -7,5 +7,6 @@ import { TracksService } from './tracks.service'
   imports: [PrismaModule],
   controllers: [TracksController],
   providers: [TracksService],
+  exports: [TracksService],
 })
 export class TracksModule {}
