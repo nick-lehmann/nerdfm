@@ -1,9 +1,8 @@
-import { Module } from '@nestjs/common'
+import { Module, OnModuleInit } from '@nestjs/common'
 import { PassportModule } from '@nestjs/passport'
 import { ScheduleModule } from '@nestjs/schedule'
-import { TypedConfigModule, fileLoader } from 'nest-typed-config'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+import { TypedConfigModule, dotenvLoader, fileLoader } from 'nest-typed-config'
+import * as path from 'path'
 import { Config } from './config'
 import { CoreModule } from './core/core.module'
 import { FetcherModule } from './fetcher/fetcher.module'
@@ -16,18 +15,25 @@ import { SpotifyModule } from './spotify/spotify.module'
     ScheduleModule.forRoot(),
     TypedConfigModule.forRoot({
       schema: Config,
-      load: fileLoader({
-        // basename: 'config',
-        absolutePath: '/Users/nick/Projekte/nerdfm/config.yml',
-      }),
+      load: [
+        dotenvLoader(),
+        fileLoader({
+          absolutePath: path.join(process.cwd(), 'config', 'config.local.yml'),
+          ignoreEnvironmentVariableSubstitution: false,
+        }),
+      ],
+      isGlobal: true,
     }),
     PrismaModule,
-    // TracksModule,
     SpotifyModule,
     FetcherModule,
     CoreModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements OnModuleInit {
+  constructor(private readonly config: Config) {}
+
+  onModuleInit() {
+    console.debug('Config:', this.config)
+  }
+}

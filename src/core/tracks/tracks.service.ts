@@ -34,12 +34,13 @@ export class TracksService {
   constructor(private readonly db: PrismaService) {}
 
   async upsert(track: CreateTrack, id?: TrackID): Promise<Track> {
-    const newTrack: DbTrack = await this.db.track.upsert({
-      create: track,
-      update: track,
-      where: { id },
-    })
-    return this.mapper.toModel(newTrack)
+    throw Error('Not implemented')
+    // const newTrack: DbTrack = await this.db.track.upsert({
+    //   create: track,
+    //   update: track,
+    //   where: { id },
+    // })
+    // return this.mapper.toModel(newTrack)
   }
 
   async list(): Promise<Track[]> {

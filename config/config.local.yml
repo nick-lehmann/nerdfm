@@ -1,0 +1,15 @@
+database:
+  # adapter: sqlite
+  path: prisma/dev.db
+
+network:
+  protocol: http
+  host: localhost
+  port: 3000
+
+auth:
+  secret: ${AUTH_SECRET}
+
+spotify:
+  clientId: ${SPOTIFY_CLIENT_ID}
+  clientSecret: ${SPOTIFY_CLIENT_SECRET}
